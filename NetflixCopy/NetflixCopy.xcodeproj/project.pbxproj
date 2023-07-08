@@ -9,19 +9,27 @@
 /* Begin PBXBuildFile section */
 		AC4E3A962A59E246007B7A87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3A952A59E246007B7A87 /* AppDelegate.swift */; };
 		AC4E3A982A59E246007B7A87 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3A972A59E246007B7A87 /* SceneDelegate.swift */; };
-		AC4E3A9A2A59E246007B7A87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3A992A59E246007B7A87 /* ViewController.swift */; };
+		AC4E3A9A2A59E246007B7A87 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3A992A59E246007B7A87 /* MainTabBarViewController.swift */; };
 		AC4E3A9F2A59E248007B7A87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC4E3A9E2A59E248007B7A87 /* Assets.xcassets */; };
 		AC4E3AA22A59E248007B7A87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC4E3AA02A59E248007B7A87 /* LaunchScreen.storyboard */; };
+		AC4E3AAB2A59E699007B7A87 /* HomeViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3AAA2A59E699007B7A87 /* HomeViewViewController.swift */; };
+		AC4E3AAD2A59E71C007B7A87 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3AAC2A59E71C007B7A87 /* UpcomingViewController.swift */; };
+		AC4E3AAF2A59E75E007B7A87 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3AAE2A59E75E007B7A87 /* SearchViewController.swift */; };
+		AC4E3AB12A59E7A4007B7A87 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E3AB02A59E7A4007B7A87 /* DownloadsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AC4E3A922A59E246007B7A87 /* NetflixCopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixCopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC4E3A952A59E246007B7A87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC4E3A972A59E246007B7A87 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AC4E3A992A59E246007B7A87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AC4E3A992A59E246007B7A87 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		AC4E3A9E2A59E248007B7A87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC4E3AA12A59E248007B7A87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC4E3AA32A59E248007B7A87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC4E3AAA2A59E699007B7A87 /* HomeViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewController.swift; sourceTree = "<group>"; };
+		AC4E3AAC2A59E71C007B7A87 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
+		AC4E3AAE2A59E75E007B7A87 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		AC4E3AB02A59E7A4007B7A87 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +64,24 @@
 			children = (
 				AC4E3A952A59E246007B7A87 /* AppDelegate.swift */,
 				AC4E3A972A59E246007B7A87 /* SceneDelegate.swift */,
-				AC4E3A992A59E246007B7A87 /* ViewController.swift */,
+				AC4E3AA92A59E663007B7A87 /* Controllers */,
 				AC4E3A9E2A59E248007B7A87 /* Assets.xcassets */,
 				AC4E3AA02A59E248007B7A87 /* LaunchScreen.storyboard */,
 				AC4E3AA32A59E248007B7A87 /* Info.plist */,
 			);
 			path = NetflixCopy;
+			sourceTree = "<group>";
+		};
+		AC4E3AA92A59E663007B7A87 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E3A992A59E246007B7A87 /* MainTabBarViewController.swift */,
+				AC4E3AAA2A59E699007B7A87 /* HomeViewViewController.swift */,
+				AC4E3AAC2A59E71C007B7A87 /* UpcomingViewController.swift */,
+				AC4E3AAE2A59E75E007B7A87 /* SearchViewController.swift */,
+				AC4E3AB02A59E7A4007B7A87 /* DownloadsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,8 +154,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC4E3A9A2A59E246007B7A87 /* ViewController.swift in Sources */,
+				AC4E3AAF2A59E75E007B7A87 /* SearchViewController.swift in Sources */,
+				AC4E3A9A2A59E246007B7A87 /* MainTabBarViewController.swift in Sources */,
+				AC4E3AB12A59E7A4007B7A87 /* DownloadsViewController.swift in Sources */,
 				AC4E3A962A59E246007B7A87 /* AppDelegate.swift in Sources */,
+				AC4E3AAB2A59E699007B7A87 /* HomeViewViewController.swift in Sources */,
+				AC4E3AAD2A59E71C007B7A87 /* UpcomingViewController.swift in Sources */,
 				AC4E3A982A59E246007B7A87 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
