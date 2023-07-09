@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
         
         let heroHeaderView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = heroHeaderView
+        configureNavbar()
 
         view.backgroundColor = .systemBackground
     }
@@ -34,7 +35,22 @@ class HomeViewController: UIViewController {
         
         homeFeedTable.frame = view.bounds
     }
+}
 
+// MARK: Private methods
+
+private extension HomeViewController {
+    func configureNavbar() {
+        let image = UIImage(named: "netflixLogo")?.withRenderingMode(.alwaysOriginal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+        ]
+        
+        navigationController?.navigationBar.tintColor = .white
+    }
 }
 
 // MARK: UITableViewDataSource
