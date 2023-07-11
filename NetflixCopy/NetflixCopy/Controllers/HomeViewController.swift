@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum Section: Int {
+    case trendiongMovie = 0
+    case trendingTv = 1
+    case popular = 2
+    case upcoming = 3
+    case topRated = 4
+}
+
 class HomeViewController: UIViewController {
     
     private let sectionTitles = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies", "Top rated"]
@@ -82,6 +90,57 @@ extension HomeViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else {
             return UITableViewCell()
         }
+        
+        switch indexPath.section {
+        case Section.trendiongMovie.rawValue:
+            APIManager.shared.getTrendingMovie { result in
+                switch result {
+                case .success(let content):
+                    cell.configure(contentItems: content)
+                case .failure(let error):
+                    print("Error in secrion 'trendiongMovie': \(error.localizedDescription)")
+                }
+            }
+        case Section.trendingTv.rawValue:
+            APIManager.shared.getTrendingTvs { result in
+                switch result {
+                case .success(let content):
+                    cell.configure(contentItems: content)
+                case .failure(let error):
+                    print("Error in secrion 'trendingTv': \(error.localizedDescription)")
+                }
+            }
+        case Section.popular.rawValue:
+            APIManager.shared.getPopularMovies { result in
+                switch result {
+                case .success(let content):
+                    cell.configure(contentItems: content)
+                case .failure(let error):
+                    print("Error in secrion 'popular': \(error.localizedDescription)")
+                }
+            }
+        case Section.upcoming.rawValue:
+            APIManager.shared.getUpcomingMovies { result in
+                switch result {
+                case .success(let content):
+                    cell.configure(contentItems: content)
+                case .failure(let error):
+                    print("Error in secrion 'upcoming': \(error.localizedDescription)")
+                }
+            }
+        case Section.topRated.rawValue:
+            APIManager.shared.getToRatedMovies { result in
+                switch result {
+                case .success(let content):
+                    cell.configure(contentItems: content)
+                case .failure(let error):
+                    print("Error in secrion 'topRated': \(error.localizedDescription)")
+                }
+            }
+        default:
+            fatalError("Section number \(indexPath.section) not found!")
+        }
+        
         return cell
     }
     

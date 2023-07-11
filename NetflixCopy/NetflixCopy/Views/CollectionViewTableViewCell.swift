@@ -10,13 +10,15 @@ import UIKit
 class CollectionViewTableViewCell: UITableViewCell {
 
     static let identifier = "CollectionViewTableViewCell"
+    private var contentItems: [Content] = []
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 140, height: 200)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collection.register(ContentCollectionViewCell.self,
+                            forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
         return collection
     }()
     
@@ -41,16 +43,31 @@ class CollectionViewTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: public methods
+
+extension CollectionViewTableViewCell {
+    public func configure(contentItems: [Content]) {
+        self.contentItems = contentItems
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+}
+
 // MARK: UICollectionViewDataSource
 
 extension CollectionViewTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        contentItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .green
+        guard let posterPath = contentItems[indexPath.item].posterPath,
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.configure(with: posterPath)
         return cell
     }
 }
