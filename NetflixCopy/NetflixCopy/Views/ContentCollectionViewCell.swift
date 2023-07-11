@@ -36,7 +36,7 @@ class ContentCollectionViewCell: UICollectionViewCell {
 
 extension ContentCollectionViewCell {
     public func configure(with path: String) {
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(path)") else { return }
+        guard let url = URL(string: "\(Constants.posterBaseURL)\(path)") else { return }
         posterImageView.sd_setImage(with: url, completed: nil)
     }
 }

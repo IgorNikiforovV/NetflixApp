@@ -14,6 +14,7 @@ enum APIError: Error {
 struct Constants {
     static let API_KEY = "81449d29fdcafd4dfea5e06eab9d3954"
     static let baseURL = "https://api.themoviedb.org"
+    static let posterBaseURL = "https://image.tmdb.org/t/p/w500"
 }
 
 class APIManager {
@@ -25,30 +26,36 @@ class APIManager {
         case upcomingMovie = "movie/upcoming"
         case popularMovie = "movie/popular"
         case ratedMovie = "movie/top_rated"
+        case discoverMovie = "discover/movie"
     }
     
     func getTrendingMovie(completion: @escaping (Result<[Content], APIError>) -> Void) {
-        getMovies(path: .trendingMovie, completion: completion)
+        getMovies(path: .trendingMovie, params: "&language=en-US&page=1", completion: completion)
     }
     
     func getTrendingTvs(completion: @escaping (Result<[Content], APIError>) -> Void) {
-        getMovies(path: .trendingTv, completion: completion)
+        getMovies(path: .trendingTv, params: "&language=en-US&page=1", completion: completion)
     }
     
     func getUpcomingMovies(completion: @escaping (Result<[Content], APIError>) -> Void) {
-        getMovies(path: .upcomingMovie, completion: completion)
+        getMovies(path: .upcomingMovie, params: "&language=en-US&page=1", completion: completion)
     }
     
     func getPopularMovies(completion: @escaping (Result<[Content], APIError>) -> Void) {
-        getMovies(path: .popularMovie, completion: completion)
+        getMovies(path: .popularMovie, params: "&language=en-US&page=1", completion: completion)
     }
     
     func getToRatedMovies(completion: @escaping (Result<[Content], APIError>) -> Void) {
-        getMovies(path: .ratedMovie, completion: completion)
+        getMovies(path: .ratedMovie, params: "&language=en-US&page=1", completion: completion)
     }
     
-    private func getMovies(path: ContentPath, completion: @escaping (Result<[Content], APIError>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)/3/\(path.rawValue)?api_key=\(Constants.API_KEY)&language=en-US&page=1") else {
+    func getSearchMovies(completion: @escaping (Result<[Content], APIError>) -> Void) {
+        getMovies(path: .discoverMovie, params: "&language=en-US&sort_by=popularity.desc&page=1", completion: completion)
+    }
+    
+    
+    private func getMovies(path: ContentPath, params: String, completion: @escaping (Result<[Content], APIError>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)/3/\(path.rawValue)?api_key=\(Constants.API_KEY)\(params)") else {
             return
         }
         
