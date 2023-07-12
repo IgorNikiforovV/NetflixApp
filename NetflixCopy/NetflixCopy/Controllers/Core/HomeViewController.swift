@@ -38,7 +38,7 @@ final class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
         
-        fetchData()
+        navigationController?.pushViewController(PreviewViewController(), animated: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,17 +61,6 @@ private extension HomeViewController {
         ]
         
         navigationController?.navigationBar.tintColor = .white
-    }
-    
-    func fetchData() {
-        APIManager.shared.getPopularMovies { result in
-            switch result {
-            case .success(let movies):
-                print(movies)
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }
 

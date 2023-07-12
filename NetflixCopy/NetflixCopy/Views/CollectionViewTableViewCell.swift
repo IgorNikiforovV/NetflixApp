@@ -75,5 +75,20 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate
 
 extension CollectionViewTableViewCell: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let contentItem = contentItems[indexPath.item]
+        guard let title = contentItem.originalTitle else { return }
+        
+        APIManager().getYoutubeMovies(searchQuery: "\(title) trailer") { result in
+            switch result {
+            case .success(let videoObject):
+                print(videoObject?.id)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+    }
 }

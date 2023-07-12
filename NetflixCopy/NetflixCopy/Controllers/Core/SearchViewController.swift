@@ -15,15 +15,26 @@ class SearchViewController: UIViewController {
         table.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         return table
     }()
+    
+    private var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: SearchResultsViewController())
+        controller.searchBar.placeholder = "Search for a movie or a tv show"
+        controller.searchBar.searchBarStyle = .minimal
+        return controller
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureNavBar()
+        view.backgroundColor = .systemBackground
         view.addSubview(discoverTable)
         discoverTable.dataSource = self
         discoverTable.delegate = self
-        view.backgroundColor = .systemBackground
+        
+        navigationItem.searchController = searchController
+        navigationController?.navigationBar.tintColor = .white
+        searchController.searchResultsUpdater = self
         
         fetchSearchMovies()
     }
@@ -82,5 +93,31 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         160
+    }
+}
+
+// MARK: UISearchResultsUpdating
+
+extension SearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        
+        guard let querySearchText = searchBar.text,
+              !querySearchText.trimmingCharacters(in: .whitespaces).isEmpty,
+              querySearchText.trimmingCharacters(in: .whitespaces).count >= 3,
+              let resultsController = searchController.searchResultsController as? SearchResultsViewController else {
+            return
+        }
+        
+        APIManager().getSearchMovies(searchQuery: querySearchText) { result in
+            switch result {
+            case .success(let content):
+                DispatchQueue.main.async {
+                    resultsController.updateResults(content)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
