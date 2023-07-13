@@ -16,6 +16,9 @@ enum Section: Int {
 }
 
 final class HomeViewController: UIViewController {
+    private var randomTrendingMovie: Content?
+    private var headerView: HeroHeaderView?
+    
     private let sectionTitles = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies", "Top rated"]
     
     private let homeFeedTable: UITableView = {
@@ -32,13 +35,13 @@ final class HomeViewController: UIViewController {
         homeFeedTable.dataSource = self
         homeFeedTable.delegate = self
         
-        let heroHeaderView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-        homeFeedTable.tableHeaderView = heroHeaderView
+        headerView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        homeFeedTable.tableHeaderView = headerView
         configureNavbar()
+        
+        configureHeroHeaderView()
 
         view.backgroundColor = .systemBackground
-        
-        navigationController?.pushViewController(PreviewViewController(), animated: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,6 +64,20 @@ private extension HomeViewController {
         ]
         
         navigationController?.navigationBar.tintColor = .white
+    }
+    
+    private func configureHeroHeaderView() {
+        APIManager.shared.getSearchMovies { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let movie = movies.randomElement()
+                self?.randomTrendingMovie = movie
+                let viewModel = MovieViewModel(titleName: movie?.originalTitle ?? "", posterURL: movie?.posterPath ?? "" )
+                self?.headerView?.configure(viewModel)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -128,11 +145,9 @@ extension HomeViewController: UITableViewDataSource {
         default:
             fatalError("Section number \(indexPath.section) not found!")
         }
-        
+        cell.delegate = self
         return cell
     }
-    
-    
 }
 
 // MARK: UITableViewDelegate
@@ -165,3 +180,12 @@ extension HomeViewController: UITableViewDelegate {
     }
 }
 
+// MARK: CollectionViewTableViewCellDelegate
+
+extension HomeViewController: CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: PreviewViewModel) {
+        let controller = PreviewViewController()
+        controller.configure(model: viewModel)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}

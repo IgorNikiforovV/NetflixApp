@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeroHeaderView: UIView {
+final class HeroHeaderView: UIView {
     private let downloadButton: UIButton = {
        let button = UIButton()
         button.setTitle("Download", for: .normal)
@@ -32,7 +32,6 @@ class HeroHeaderView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "heroImage")
         return imageView
     }()
 
@@ -77,5 +76,17 @@ class HeroHeaderView: UIView {
             downloadButton.widthAnchor.constraint(equalToConstant: 120)
         ]
         NSLayoutConstraint.activate(playButtonConstraints + downloadButtonConstraints)
+    }
+}
+
+// MARK: Public methods
+
+extension HeroHeaderView {
+    public func configure(_ model: MovieViewModel) {
+        guard let url = URL(string: "\(Constants.posterBaseURL)\(model.posterURL)") else {
+            heroImageView.image = UIImage(named: "heroImage")
+            return
+        }
+        heroImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "heroImage"))
     }
 }

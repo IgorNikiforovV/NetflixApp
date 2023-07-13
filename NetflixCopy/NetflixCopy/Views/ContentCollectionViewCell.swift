@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class ContentCollectionViewCell: UICollectionViewCell {
+final class ContentCollectionViewCell: UICollectionViewCell {
     static let identifier = "ContentCollectionViewCell"
 
     private let posterImageView: UIImageView = {

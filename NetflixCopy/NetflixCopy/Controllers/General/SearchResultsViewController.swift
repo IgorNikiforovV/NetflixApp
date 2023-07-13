@@ -7,8 +7,14 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController {
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel)
+}
+
+final class SearchResultsViewController: UIViewController {
     private var contentItems = [Content]()
+    
+    weak var delegate: SearchResultsViewControllerDelegate?
     
     private var searchResultsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -66,4 +72,23 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 // MARK: UITableViewDelegate
 
 extension SearchResultsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = contentItems[indexPath.item]
+        
+        guard let title = movie.originalTitle else { return }
+        
+        APIManager.shared.getYoutubeMovies(searchQuery: title) { [weak self] result in
+            switch result {
+            case .success(let videoObject):
+                guard let videoObject else { return }
+
+                let viewModel = PreviewViewModel(title: title, titleOverview: movie.overview ?? "", youtubeView: videoObject)
+                DispatchQueue.main.async {
+                    self?.delegate?.searchResultsViewControllerDidTapItem(viewModel)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

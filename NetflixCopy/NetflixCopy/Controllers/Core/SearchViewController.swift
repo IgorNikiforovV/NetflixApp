@@ -94,6 +94,30 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         160
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let movie = contentItems[indexPath.item]
+        
+        guard let title = movie.originalTitle else { return }
+        
+        APIManager.shared.getYoutubeMovies(searchQuery: title) { [weak self] result in
+            switch result {
+            case .success(let videoObject):
+                guard let videoObject else { return }
+
+                let viewModel = PreviewViewModel(title: title, titleOverview: movie.overview ?? "", youtubeView: videoObject)
+                DispatchQueue.main.async {
+                    let controller = PreviewViewController()
+                    controller.configure(model: viewModel)
+                    self?.navigationController?.pushViewController(controller, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 // MARK: UISearchResultsUpdating
@@ -109,7 +133,9 @@ extension SearchViewController: UISearchResultsUpdating {
             return
         }
         
-        APIManager().getSearchMovies(searchQuery: querySearchText) { result in
+        resultsController.delegate = self
+        
+        APIManager.shared.getSearchMovies(searchQuery: querySearchText) { result in
             switch result {
             case .success(let content):
                 DispatchQueue.main.async {
@@ -119,5 +145,15 @@ extension SearchViewController: UISearchResultsUpdating {
                 print(error)
             }
         }
+    }
+}
+
+// MARK: SearchResultsViewControllerDelegate
+
+extension SearchViewController: SearchResultsViewControllerDelegate {
+    func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel) {
+        let controller = PreviewViewController()
+        controller.configure(model: viewModel)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }

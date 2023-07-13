@@ -17,6 +17,7 @@ struct Constants {
     static let posterBaseURL = "https://image.tmdb.org/t/p/w500"
     static let youtubeAPI_KEY = "AIzaSyA_83CNGwTHzPyRt69HRoPGK6Q90pZDUoA"
     static let youtubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
+    static let youtubeVideURL = "https://www.youtube.com/embed/"
 }
 
 class APIManager {
@@ -31,6 +32,8 @@ class APIManager {
         case discoverMovie = "discover/movie"
         case searchMovie = "search/movie"
     }
+    
+    private init(){}
     
     func getTrendingMovie(completion: @escaping (Result<[Content], APIError>) -> Void) {
         getMovies(path: .trendingMovie, params: "&language=en-US&page=1", completion: completion)

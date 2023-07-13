@@ -66,7 +66,7 @@ private extension PreviewViewController {
             webView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.heightAnchor.constraint(equalToConstant: 250)
+            webView.heightAnchor.constraint(equalToConstant: 300)
         ]
         
         let titleLabelConstraints = [
@@ -76,7 +76,8 @@ private extension PreviewViewController {
         
         let overviewLabelConstraints = [
             overviewLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            overviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            overviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            overviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ]
         
         let downloadButtonConstraints = [
@@ -100,6 +101,10 @@ extension PreviewViewController {
     func configure(model: PreviewViewModel) {
         titleLabel.text = model.title
         overviewLabel.text = model.titleOverview
-        
+
+        guard let url = URL(string: "\(Constants.youtubeVideURL)\(model.youtubeView.id.videoId)") else {
+            return
+        }
+        webView.load(URLRequest(url: url))
     }
 }

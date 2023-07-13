@@ -15,4 +15,9 @@ struct MovieViewModel {
         titleName = content.originalTitle ?? ""
         posterURL = "\(Constants.posterBaseURL)\(content.posterPath ?? "")"
     }
+    
+    init(titleName: String, posterURL: String) {
+        self.titleName = titleName
+        self.posterURL = posterURL
+    }
 }
