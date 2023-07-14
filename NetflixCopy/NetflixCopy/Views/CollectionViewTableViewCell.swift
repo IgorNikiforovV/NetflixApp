@@ -64,7 +64,15 @@ extension CollectionViewTableViewCell {
 
 private extension CollectionViewTableViewCell {
     func downloadVideoAt(indexPath: IndexPath) {
-        print(contentItems[indexPath.item].originalTitle)
+        let content = contentItems[indexPath.item]
+        DataPersistenceManager.shared.downloadVideoContent(with: content) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("videoDownloaded"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
