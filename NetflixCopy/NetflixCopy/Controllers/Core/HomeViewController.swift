@@ -21,6 +21,8 @@ final class HomeViewController: UIViewController {
     
     private let sectionTitles = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies", "Top rated"]
     
+    private var navBarOffset: CGFloat = 0
+    
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(CollectionViewTableViewCell.self,
@@ -43,6 +45,17 @@ final class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: -navBarOffset)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.navigationBar.transform = .identity
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -164,6 +177,7 @@ extension HomeViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let defaultOffset = view.safeAreaInsets.top
         let offset = scrollView.contentOffset.y + defaultOffset
+        navBarOffset = offset
         navigationController?.navigationBar.transform = .init(translationX: 0, y: -offset)
     }
     
