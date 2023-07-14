@@ -31,6 +31,7 @@
 		ACDDB21F2A5F084800D4D723 /* PreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDDB21E2A5F084800D4D723 /* PreviewViewModel.swift */; };
 		ACDDB28B2A605E1C00D4D723 /* NetflixCopyModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ACDDB2892A605E1C00D4D723 /* NetflixCopyModel.xcdatamodeld */; };
 		ACDDB28D2A6066EF00D4D723 /* DataPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDDB28C2A6066EF00D4D723 /* DataPersistenceManager.swift */; };
+		ACDDB2982A61BC6D00D4D723 /* HomePageStructureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDDB2972A61BC6D00D4D723 /* HomePageStructureService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		ACDDB21E2A5F084800D4D723 /* PreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewModel.swift; sourceTree = "<group>"; };
 		ACDDB28A2A605E1C00D4D723 /* NetflixCopyModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetflixCopyModel.xcdatamodel; sourceTree = "<group>"; };
 		ACDDB28C2A6066EF00D4D723 /* DataPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManager.swift; sourceTree = "<group>"; };
+		ACDDB2972A61BC6D00D4D723 /* HomePageStructureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageStructureService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			children = (
 				AC3111052A5C3E180061869E /* APIManager.swift */,
 				ACDDB28C2A6066EF00D4D723 /* DataPersistenceManager.swift */,
+				ACDDB2972A61BC6D00D4D723 /* HomePageStructureService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				ACDDB21F2A5F084800D4D723 /* PreviewViewModel.swift in Sources */,
 				AC4E3A982A59E246007B7A87 /* SceneDelegate.swift in Sources */,
 				ACDDB2112A5D962200D4D723 /* MovieTableViewCell.swift in Sources */,
+				ACDDB2982A61BC6D00D4D723 /* HomePageStructureService.swift in Sources */,
 				ACDDB28B2A605E1C00D4D723 /* NetflixCopyModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

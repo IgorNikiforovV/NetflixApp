@@ -7,14 +7,6 @@
 
 import UIKit
 
-enum Section: Int {
-    case trendiongMovie = 0
-    case trendingTv = 1
-    case popular = 2
-    case upcoming = 3
-    case topRated = 4
-}
-
 final class HomeViewController: UIViewController {
     private var randomTrendingMovie: Content?
     private var headerView: HeroHeaderView?
@@ -22,6 +14,8 @@ final class HomeViewController: UIViewController {
     private let sectionTitles = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies", "Top rated"]
     
     private var navBarOffset: CGFloat = 0
+    
+    private var structureService = HomePageStructureService()
     
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -32,6 +26,12 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        structureService.fetchConentShelves {
+            DispatchQueue.main.async {
+                self.homeFeedTable.reloadData()
+            }
+        }
         
         view.addSubview(homeFeedTable)
         homeFeedTable.dataSource = self
@@ -98,7 +98,7 @@ private extension HomeViewController {
 
 extension HomeViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionTitles.count
+        structureService.conentShelves.keys.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -111,50 +111,20 @@ extension HomeViewController: UITableViewDataSource {
         
         switch indexPath.section {
         case Section.trendiongMovie.rawValue:
-            APIManager.shared.getTrendingMovie { result in
-                switch result {
-                case .success(let content):
-                    cell.configure(contentItems: content)
-                case .failure(let error):
-                    print("Error in secrion 'trendiongMovie': \(error.localizedDescription)")
-                }
-            }
+            guard let content = structureService.conentShelves[.trendiongMovie] else { break }
+            cell.configure(contentItems: content)
         case Section.trendingTv.rawValue:
-            APIManager.shared.getTrendingTvs { result in
-                switch result {
-                case .success(let content):
-                    cell.configure(contentItems: content)
-                case .failure(let error):
-                    print("Error in secrion 'trendingTv': \(error.localizedDescription)")
-                }
-            }
+            guard let content = structureService.conentShelves[.trendingTv] else { break }
+            cell.configure(contentItems: content)
         case Section.popular.rawValue:
-            APIManager.shared.getPopularMovies { result in
-                switch result {
-                case .success(let content):
-                    cell.configure(contentItems: content)
-                case .failure(let error):
-                    print("Error in secrion 'popular': \(error.localizedDescription)")
-                }
-            }
+            guard let content = structureService.conentShelves[.popular] else { break }
+            cell.configure(contentItems: content)
         case Section.upcoming.rawValue:
-            APIManager.shared.getUpcomingMovies { result in
-                switch result {
-                case .success(let content):
-                    cell.configure(contentItems: content)
-                case .failure(let error):
-                    print("Error in secrion 'upcoming': \(error.localizedDescription)")
-                }
-            }
+            guard let content = structureService.conentShelves[.upcoming] else { break }
+            cell.configure(contentItems: content)
         case Section.topRated.rawValue:
-            APIManager.shared.getToRatedMovies { result in
-                switch result {
-                case .success(let content):
-                    cell.configure(contentItems: content)
-                case .failure(let error):
-                    print("Error in secrion 'topRated': \(error.localizedDescription)")
-                }
-            }
+            guard let content = structureService.conentShelves[.topRated] else { break }
+            cell.configure(contentItems: content)
         default:
             fatalError("Section number \(indexPath.section) not found!")
         }
